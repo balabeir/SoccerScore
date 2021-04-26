@@ -38,12 +38,14 @@
     <div class="container">
 
       <!-- match show -->
+      <!-- ทำการวน loop for เพื่อดึงขอมูลมาจาก object  -->
       <div class="table table-hover table-detail">
         <table
           v-for="team in info.data"
           :key="team"
           class="list table table-striped "
         >
+        <!-- กรณีที่ Match มีการเลื่อนออกไปจะไม่โชว์ score -->
           <tr v-if="team.status != 'postponed'">
             <td width="150px"><img :src="team.home_team.logo" /></td>
             <td width="150px">{{ team.home_team.name }}</td>
@@ -56,6 +58,7 @@
       <!-- end match show -->
 
       <!-- card show stat and detail -->
+      <!-- ใช้ card เพื่อสร้างเป็นหน้าต่างเพื่อให้ดูสวยงาม -->
       <div class="description">
         <div class="card text-center border-dark mb-3">
           <div class="card-header">
@@ -86,14 +89,18 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      // ตัวแปรที่นำมาเก็บค่าจาก api
       info: {}
     }
   },
   // get match_id by props
+  // ใช้ function props เพื่อนำค่า params ที่ได้ส่งมาจากหน้า schedule มาใช้
   props: ['MatchDetail'],
   // get api function
   mounted () {
+    // รับค่าจาก api โดยใช้ axios
     axios
+    // นำตัวแปรที่ได้มาจาก props มาต่อท้ายเข้า api จะได้ข้อมูลเฉพาะของแต่ละ Match
       .get('https://soccerscoreapi.herokuapp.com/match-detail/' + this.MatchDetail)
       .then(response => {
         this.info = response

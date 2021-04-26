@@ -104,13 +104,16 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      // สร้างตัวแปรไว้รับค่าจาก api 
       info: {}
 
       // JSON.stringify(jsArray) converts the jsArray into a string which can be stored in sessionStorage
     }
   },
+  // ใช้ axios เพื่อ get ค่าจาก api ของ backend
   mounted () {
     axios.get('https://soccerscoreapi.herokuapp.com/standings/1511').then(response => {
+      // สร้างตัวแปร object มาเพื่อเก็บค่า api
       this.info = response
     })
   }

@@ -40,16 +40,19 @@
     <div class="container">
 
       <!-- for date of the match -->
+      <!-- นำวันที่ในแต่ละ Match ออกมาแสดงโดยสร้างตัวแปรรับค่า object โดยใช้ loop for -->
       <div class="table" v-for="date in NewDate" :key="date">
         <h2>{{ date }}</h2>
       <!-- end for date of the match -->
 
       <!-- data in table -->
+      <!-- ทำการ วน loop เพื่อดึงค่าข้อมูล Match ต่างๆมาแสดง -->
         <div v-for="team in info.data.data" :key="team">
           <table v-if="date == team.match_date_th" class="table  table-hover">
             <tbody>
 
               <!-- send match id to match-detail -->
+               <!-- ใช้ router link เพื่อเป็นการส่ง params ไปยังหน้า Match Detail เพื่อ Filler เฉพาะ Match นั้นๆ -->
               <router-link
                 :to="{
                   name: 'laliga-detail',
@@ -69,6 +72,8 @@
                   </td>
 
                   <!-- if statement -->
+                  <!-- ในส่วนของ row นี้จะเป็นการนำสกอร์ของแต่ละ Match ออกมาแต่เนื่องจากมีบาง Match ที่เลื่อนหรือยังไม่ได้แข่งจึงใช้ if เช็คเงื่อนไขก่อนแสดงผล -->
+                  <!-- กรณีแข่งขันจบแล้ว -->
                   <td
                     width="300px"
                     class="inrow"
@@ -76,6 +81,8 @@
                   >
                     {{ team.stats.ft_score }}
                   </td>
+
+                   <!-- กรณียังไม่ได้แข่งขัน -->
                   <td
                     width="300px"
                     class="inrow"
@@ -83,6 +90,8 @@
                   >
                     {{ team.match_time_th }}
                   </td>
+
+                  <!-- กรณีกำลังแข่งขันอยู่หรือเลื่อนการแข่งขันออกไป -->
                   <td
                     width="300px"
                     class="inrow"
@@ -90,6 +99,8 @@
                   >
                     {{ team.status }}
                   </td>
+
+                  <!-- กรณียังไม่ได้มีการประกาศเวลาแข่งขันออกมา -->
                   <td
                     width="300px"
                     class="inrow"
@@ -122,9 +133,13 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      // ตัวแปรที่นำมาเก็บค่าจาก api
       info: {},
+      // ตัวแปรที่นำมาเก็บค่าจาก api
       date: {},
+      // ตัวแปรที่สร้างมาไว้สำหรับสร้าง set เพื่อกรองวันที่ ที่เหมือนกันออกเหลือ 1 วัน
       arrayMap: null,
+      // นำมาเก็บค่าจาก arrayMap อีกที
       NewDate: null
 
       // JSON.stringify(jsArray) converts the jsArray into a string which can be stored in sessionStorage
@@ -132,17 +147,21 @@ export default {
   },
   // get api function
   mounted () {
+    // รับค่าจาก api โดยใช้ axios
     axios
       .get(
         'https://soccerscoreapi.herokuapp.com/matches/1511'
       )
       .then(response => {
+        // รับค่าจากทั้งหมดจาก api
         this.info = response
+        // รับเฉพาะ object ที่มีวันอยู่
         this.date = response.data.data
-        // console.log(this.date)
+        //  ทำการ map date เข้ากับ ค่าข้างใน object ที่มีวันอยู่ โดยเก็บไว้ที่ arrayMap
         this.arrayMap = this.date.map(date => date.match_date_th)
+        //  สร้างตัวแปรมารับค่าที่นำไปเข้า set แล้วจะได้วันที่ออกมา
         this.NewDate = new Set(this.arrayMap)
-        console.log(this.NewDate)
+        
       })
   }
 }
