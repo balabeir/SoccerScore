@@ -1,16 +1,23 @@
 <template>
   <div>
+
+    <!-- title of page -->
     <div class="background">
+
+      <!-- title img logo and Premeir league text-->
       <div class="container">
         <div class="image">
           <img
-            src="../../../assets/logo-stan.jpg"
+            src="../../../assets/badge-laliga.png"
             alt=""
             class="image-position"
           />
           <h1>Laliga</h1>
         </div>
       </div>
+      <!-- end title img logo and Premeir league text-->
+
+      <!-- nav menu bar -->
       <div class="navbar">
         <ul class="nav nav-pills nav-fill red">
           <li class="menu nav-item">
@@ -24,13 +31,25 @@
           </li>
         </ul>
       </div>
+      <!-- end nav menu bar -->
+
     </div>
+    <!-- end title of page -->
+
+    <!-- body & table -->
     <div class="container">
+
+      <!-- for date of the match -->
       <div class="table" v-for="date in NewDate" :key="date">
         <h2>{{ date }}</h2>
+      <!-- end for date of the match -->
+
+      <!-- data in table -->
         <div v-for="team in info.data.data" :key="team">
           <table v-if="date == team.match_date_th" class="table  table-hover">
             <tbody>
+
+              <!-- send match id to match-detail -->
               <router-link
                 :to="{
                   name: 'laliga-detail',
@@ -38,6 +57,9 @@
                 }"
                 class="match-detail"
               >
+              <!-- end send match id to match-detail -->
+
+              <!-- data in table -->
                 <tr>
                   <td width="150px">
                     <img :src="team.home_team.logo" class="img-teamlogo" />
@@ -68,6 +90,13 @@
                   >
                     {{ team.status }}
                   </td>
+                  <td
+                    width="300px"
+                    class="inrow"
+                    v-if="team.status_code == 17"
+                  >
+                    TBA
+                  </td>
                   <!-- end if statement -->
 
                   <td width="150px" class="inrow">
@@ -77,6 +106,8 @@
                     <img :src="team.away_team.logo" class="img-teamlogo" />
                   </td>
                 </tr>
+                <!-- end of data in tale -->
+
               </router-link>
             </tbody>
           </table>
@@ -99,10 +130,11 @@ export default {
       // JSON.stringify(jsArray) converts the jsArray into a string which can be stored in sessionStorage
     }
   },
+  // get api function
   mounted () {
     axios
       .get(
-        'http://127.0.0.1:5000/matches/1511'
+        'https://soccerscoreapi.herokuapp.com/matches/1511'
       )
       .then(response => {
         this.info = response
@@ -193,9 +225,10 @@ h2 {
 }
 .image-position {
   background-color: white;
-  padding: 10px 10px;
-  width: 100px;
-  height: 100px;
+  padding: 10px;
+  padding-left: 10px ;
+  width: 80px;
+  height: 80px;
   background: white;
   -moz-border-radius: 70px;
   -webkit-border-radius: 70px;

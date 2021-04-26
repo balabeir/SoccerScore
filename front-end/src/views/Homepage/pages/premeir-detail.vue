@@ -1,5 +1,7 @@
 <template>
   <div>
+
+    <!-- title img logo and Premeir league text-->
     <div class="background-titlebar">
       <div class="container">
         <div class="image">
@@ -11,6 +13,9 @@
           <h1>Premeir League</h1>
         </div>
       </div>
+      <!-- end title img logo and Premeir league text-->
+
+      <!-- nav menu bar -->
       <div class="navbar">
         <ul class="nav nav-pills nav-fill red">
           <li class="nav-item">
@@ -24,14 +29,22 @@
           </li>
         </ul>
       </div>
+      <!-- end of nav menu bar  -->
     </div>
+    <!-- end of title -->
+
+    <!-- body & table -->
     <div class="container">
-      <div class="table table-hover table-detail">
+
+      <!-- match show -->
+      <div class="table table-hover table-detail">\
+        <!-- ทำการวน loop for เพื่อดึงขอมูลมาจาก object  -->
         <table
           v-for="team in info.data"
           :key="team"
           class="list table table-striped "
         >
+        <!-- กรณีที่ Match มีการเลื่อนออกไปจะไม่โชว์ score -->
           <tr v-if="team.status != 'postponed'">
             <td width="150px"><img :src="team.home_team.logo" /></td>
             <td width="150px">{{ team.home_team.name }}</td>
@@ -41,17 +54,11 @@
           </tr>
         </table>
       </div>
+      <!-- end match show -->
+
+      <!-- card show stat and detail -->
+      <!-- ใช้ card เพื่อสร้างเป็นหน้าต่างเพื่อให้ดูสวยงาม -->
       <div class="description">
-        <!-- <table v-for="team in info.data" :key="team">
-          <tr>
-            Match Detail
-          </tr>
-          <tr>
-            <td>Match Start : {{ team.match_time_th }}</td>
-            <td>Stadium : {{ team.venue.name }}</td>
-            <td>Capacity : {{ team.venue.capacity }}</td>
-          </tr>
-        </table> -->
         <div class="card text-center border-dark mb-3">
           <div class="card-header">
             Match Detail
@@ -69,8 +76,11 @@
           <div class="card-footer text-muted"></div>
         </div>
       </div>
+      <!-- end card show stat and detail -->
+
     </div>
-    <!-- <div class="Des"></div> -->
+    <!-- end body & table -->
+
   </div>
 </template>
 
@@ -79,13 +89,19 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      // ตัวแปรที่นำมาเก็บค่าจาก api
       info: {}
     }
   },
+  // get match_id by props
+  // ใช้ function props เพื่อนำค่า params ที่ได้ส่งมาจากหน้า schedule มาใช้
   props: ['MatchDetail'],
+  // get api function
   mounted () {
+    // รับค่าจาก api โดยใช้ axios
     axios
-      .get('http://127.0.0.1:5000/match-detail/' + this.MatchDetail)
+    // นำตัวแปรที่ได้มาจาก props มาต่อท้ายเข้า api จะได้ข้อมูลเฉพาะของแต่ละ Match
+      .get('https://soccerscoreapi.herokuapp.com/match-detail/' + this.MatchDetail)
       .then(response => {
         this.info = response
       })

@@ -1,16 +1,26 @@
 <template>
+
+  <!-- title and background -->
   <div class="vuetify">
+    <!-- สร้าง Text กราฟฟิคโดยใช้ CSS -->
     <div class="plate">
       <p class="text">SOCCERSCORE</p>
     </div>
+    <!-- end title and background -->
+
+    <!-- img menu -->
     <div class="ct-center">
       <div class="row">
+        <!-- ทำการลิ้ง button โดยใช้ <a> -->
         <a href="premeir-standing" class="btn space">
+          <!-- เพิ่มรูปภาพโดยใช้ <img> -->
           <img src="../../../assets/Premeir.png" class="image-home-premeir " />
         </a>
       </div>
       <div class="row">
+        <!-- ทำการลิ้ง button โดยใช้ <a> -->
         <a href="laliga-standing" class="btn">
+          <!-- เพิ่มรูปภาพโดยใช้ <img> -->
           <img
             src="../../../assets/Laliga2-edit.png"
             class="image-home-laliga "
@@ -18,6 +28,8 @@
         </a>
       </div>
     </div>
+    <!-- end img menu -->
+
   </div>
 </template>
 
@@ -38,6 +50,7 @@ body {
   background-color: #c4c4c4;
 }
 
+/* grahfic title */
 .text {
   position: absolute;
   top: 10%;
@@ -55,6 +68,8 @@ body {
     1px 22px 10px rgba(16, 16, 16, 0.2), 1px 25px 35px rgba(16, 16, 16, 0.2),
     1px 30px 60px rgba(16, 16, 16, 0.4);
 }
+
+/* set img menu to center */
 .ct-center {
   display: flex;
   justify-content: center;
@@ -88,6 +103,8 @@ body {
   padding: 20px 50px;
 
 }
+
+/* background position */
 .vuetify {
   background-image: url(../../../assets/background-homepage.jpg);
   background-size: cover;
