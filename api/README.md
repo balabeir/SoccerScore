@@ -1,2 +1,0 @@
-﻿# SoccerScore API
-
