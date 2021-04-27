@@ -238,7 +238,7 @@ def prepareStandings():
 
 if __name__ == "__main__":
     update_schedule = BackgroundScheduler(daemon=True)
-    update_schedule.add_job(prepareDB, "interval", hours=60)
+    update_schedule.add_job(prepareDB, "interval", hours=1)
     update_schedule.start()
     prepareDB()
     app.run()
